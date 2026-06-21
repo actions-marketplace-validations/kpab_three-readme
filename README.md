@@ -48,13 +48,55 @@ Unknown `--key value` flags are passed to the scene as `params`. `--color` is al
 
 ## GitHub Action
 
-`.github/workflows/render.yml` regenerates the SVGs and auto-commits them to `assets/` — triggered manually, on a weekly schedule (every Monday), or on pushes to `main` that touch `src` and similar paths.
+### Use it as a reusable Action (recommended)
 
-To use it in your own repository:
+Add a few lines to a workflow in your own repository — no need to copy this repo or install Three.js yourself. The Action renders the scene into your workspace; commit the result with any auto-commit step.
 
-1. Copy `.github/workflows/render.yml`.
-2. Edit the CLI `--scene`, color, frame count, output path, etc.
-3. Set `permissions: contents: write` in the workflow to grant Actions commit access.
+```yaml
+name: readme-art
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "17 3 * * 1" # weekly
+
+permissions:
+  contents: write
+
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: kpab/three-readme@v1
+        with:
+          scene: torusknot
+          color: "#39d353"
+          bg: "#0d1117"
+          out: assets/torusknot.svg
+
+      - uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "chore: update readme art"
+          file_pattern: "assets/*.svg"
+```
+
+| Input | Default | Description |
+| --- | --- | --- |
+| `scene` | `torusknot` | Scene name (`torusknot` / `icosahedron` / `torus`) |
+| `frames` | `24` | Number of frames |
+| `fps` | `12` | Frames per second |
+| `width` | `480` | SVG width |
+| `height` | `480` | SVG height |
+| `color` | `#ffffff` | Drawing color |
+| `bg` | `none` | Background color (`none` for transparent) |
+| `out` | _(required)_ | Output path, relative to your repo |
+| `node-version` | `20` | Node.js version used to run the renderer |
+
+### Copy the full workflow (this repo)
+
+`.github/workflows/render.yml` is how this repo renders its own demos: it regenerates the SVGs and auto-commits them to `assets/` — triggered manually, on a weekly schedule (every Monday), or on pushes to `main` that touch `src` and similar paths. Use it as a worked example if you'd rather vendor the renderer than reference the Action.
 
 ## Embedding in a README
 

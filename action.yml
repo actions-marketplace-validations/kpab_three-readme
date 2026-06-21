@@ -1,0 +1,59 @@
+name: three-readme
+description: Bake a Three.js scene into an animated SVG (SMIL) for embedding in your README.
+branding:
+  icon: box
+  color: green
+
+inputs:
+  scene:
+    description: "Scene name to render (torusknot / icosahedron / torus)."
+    default: torusknot
+  frames:
+    description: "Number of frames."
+    default: "24"
+  fps:
+    description: "Frames per second."
+    default: "12"
+  width:
+    description: "SVG width."
+    default: "480"
+  height:
+    description: "SVG height."
+    default: "480"
+  color:
+    description: "Drawing color passed to the scene."
+    default: "#ffffff"
+  bg:
+    description: "Background color. Use 'none' for transparent."
+    default: "none"
+  out:
+    description: "Output path, relative to the calling repository's workspace."
+    required: true
+  node-version:
+    description: "Node.js version used to run the renderer."
+    default: "20"
+
+runs:
+  using: composite
+  steps:
+    - uses: actions/setup-node@v4
+      with:
+        node-version: ${{ inputs.node-version }}
+
+    - name: Install renderer dependencies
+      shell: bash
+      working-directory: ${{ github.action_path }}
+      run: npm ci
+
+    - name: Render scene
+      shell: bash
+      run: |
+        node --import tsx "${{ github.action_path }}/src/cli.ts" \
+          --scene "${{ inputs.scene }}" \
+          --frames "${{ inputs.frames }}" \
+          --fps "${{ inputs.fps }}" \
+          --width "${{ inputs.width }}" \
+          --height "${{ inputs.height }}" \
+          --color "${{ inputs.color }}" \
+          --bg "${{ inputs.bg }}" \
+          --out "${{ github.workspace }}/${{ inputs.out }}"
