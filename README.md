@@ -5,8 +5,9 @@ Three.js シーンを README 埋め込み用のアニメ SVG（SMIL）に焼く 
 ## デモ
 
 ![torusknot](./assets/torusknot.svg)
+![icosahedron](./assets/icosahedron.svg)
 
-`assets/torusknot.svg` は GitHub Action の初回実行まで存在しません。
+`assets/*.svg` は GitHub Action の初回実行まで存在しません。
 
 ## 仕組み
 
