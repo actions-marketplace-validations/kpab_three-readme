@@ -70,3 +70,7 @@ GitHub serves SVGs through its camo proxy with aggressive caching. The `render` 
 
 - Animation is SMIL only. No CSS `<style>` or `@keyframes`.
 - Aim for around 12 fps and within a few hundred KB.
+
+## License
+
+[MIT](./LICENSE)

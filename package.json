@@ -1,7 +1,26 @@
 {
   "name": "three-readme",
-  "version": "0.0.0",
-  "private": true,
+  "version": "0.1.0",
+  "description": "Bake Three.js scenes into animated SVGs (SMIL) for embedding in your README, via a CLI and GitHub Action.",
+  "license": "MIT",
+  "author": "kpab",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kpab/three-readme.git"
+  },
+  "homepage": "https://github.com/kpab/three-readme#readme",
+  "bugs": {
+    "url": "https://github.com/kpab/three-readme/issues"
+  },
+  "keywords": [
+    "three",
+    "threejs",
+    "svg",
+    "smil",
+    "readme",
+    "animation",
+    "github-action"
+  ],
   "type": "module",
   "engines": {
     "node": ">=20"
