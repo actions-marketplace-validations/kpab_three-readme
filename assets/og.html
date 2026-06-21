@@ -1,0 +1,40 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 1200px; height: 630px; }
+  body {
+    background: radial-gradient(120% 120% at 80% 0%, #161b22 0%, #0d1117 60%);
+    color: #e6edf3;
+    font-family: -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+    display: flex; flex-direction: column;
+    justify-content: center;
+    padding: 64px 72px;
+  }
+  .title {
+    font-size: 78px; font-weight: 800; letter-spacing: -2px;
+    background: linear-gradient(90deg, #39d353, #58a6ff, #f778ba);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .tag { font-size: 30px; color: #8b949e; margin-top: 14px; max-width: 760px; line-height: 1.4; }
+  .row { display: flex; gap: 28px; margin-top: 48px; }
+  .row img { width: 176px; height: 176px; background: #0d1117; border-radius: 18px;
+             border: 1px solid #21262d; }
+  .foot { margin-top: 40px; font-size: 24px; color: #6e7681; font-family: ui-monospace, monospace; }
+  .scenes { position: absolute; right: 72px; bottom: 72px; display: flex; gap: 24px; }
+  .scenes img { width: 188px; height: 188px; background: #0d1117; border-radius: 18px; border: 1px solid #21262d; }
+</style>
+</head>
+<body>
+  <div class="title">three-readme</div>
+  <div class="tag">Bake Three.js scenes into animated SVGs for your README — via a CLI &amp; GitHub Action.</div>
+  <div class="foot">uses: kpab/three-readme@v1</div>
+  <div class="scenes">
+    <img src="torusknot.svg">
+    <img src="icosahedron.svg">
+    <img src="torus.svg">
+  </div>
+</body>
+</html>
