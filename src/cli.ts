@@ -4,10 +4,7 @@ import * as THREE from "three";
 import { encodeFlipbook } from "./flipbook.js";
 import { createRenderer, renderToString } from "./headless.js";
 import { optimizeSvg } from "./optimize.js";
-import type { SceneFactory } from "./scene.js";
-import { torusknot } from "./scenes/torusknot.js";
-
-const sceneRegistry: Record<string, SceneFactory> = { torusknot };
+import { sceneRegistry } from "./scenes/index.js";
 
 interface CliOptions {
   scene: string;

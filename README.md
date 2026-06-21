@@ -23,7 +23,7 @@ npm run render -- --scene torusknot --frames 24 --bg "#0d1117" --color "#39d353"
 
 | フラグ | 既定値 | 説明 |
 | --- | --- | --- |
-| `--scene` | `torusknot` | 描画するシーン名 |
+| `--scene` | `torusknot` | 描画するシーン名（`torusknot` または `icosahedron`） |
 | `--frames` | `24` | フレーム数（正の整数） |
 | `--fps` | `12` | 1秒あたりのフレーム数 |
 | `--width` | `480` | SVG の幅 |
@@ -33,6 +33,14 @@ npm run render -- --scene torusknot --frames 24 --bg "#0d1117" --color "#39d353"
 | `--out` | `out/<scene>.svg` | 出力先 |
 
 未知の `--key value` フラグは `params` としてシーンへ渡されます。`--color` も `params` 経由でシーンが使用します。
+
+## シーンの追加方法
+
+1. `src/scenes/<name>.ts` を作り、`SceneFactory`（`(params, ctx) => { scene, camera, update(frame, frameCount) }`）を default export ではなく名前付き export で実装します。`ctx` は `{ THREE, width, height }` です。色には `params.color` を使います。
+2. `src/scenes/index.ts` でシーンを import し、`sceneRegistry` に登録します。
+3. `npm run render -- --scene <name> --out assets/<name>.svg` で生成して確認します。
+
+`src/scenes/torusknot.ts` と `src/scenes/icosahedron.ts` が実装例です。
 
 ## GitHub Action
 
