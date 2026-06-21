@@ -8,7 +8,8 @@
   },
   "scripts": {
     "build": "tsc -p tsconfig.json",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "render": "tsx src/cli.ts"
   },
   "dependencies": {
     "jsdom": "^29.1.1",
