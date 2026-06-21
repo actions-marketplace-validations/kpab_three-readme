@@ -4,11 +4,13 @@ Three.js シーンを README 埋め込み用のアニメ SVG（SMIL）に焼く 
 
 ## デモ
 
-![torusknot](./assets/torusknot.svg)
-![icosahedron](./assets/icosahedron.svg)
-![torus](./assets/torus.svg)
+<p>
+  <img width="32%" alt="torusknot" src="./assets/torusknot.svg?v=1">
+  <img width="32%" alt="icosahedron" src="./assets/icosahedron.svg?v=1">
+  <img width="32%" alt="torus" src="./assets/torus.svg?v=1">
+</p>
 
-`assets/*.svg` は GitHub Action の初回実行まで存在しません。
+`assets/*.svg` は GitHub Action の初回実行まで存在しません。`?v=N` は camo キャッシュバスト用で、SVG 更新を反映したいときに N を増やします（[README への貼り方](#readme-への貼り方)参照）。
 
 ## 仕組み
 
