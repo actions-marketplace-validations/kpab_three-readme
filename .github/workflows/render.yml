@@ -1,0 +1,37 @@
+name: render
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "17 3 * * 1"
+  push:
+    branches: [main]
+    paths:
+      - "src/**"
+      - "package.json"
+      - "package-lock.json"
+      - ".github/workflows/render.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - run: npm ci
+
+      - run: npm run render -- --scene torusknot --frames 24 --fps 12 --bg "#0d1117" --color "#39d353" --out assets/torusknot.svg
+
+      # 成果物は決定的（同じ入力なら同じ出力）なため、差分がなければコミットも再トリガーもされません。
+      - uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "chore: シーンSVGを再生成"
+          file_pattern: assets/*.svg
