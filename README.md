@@ -1,8 +1,8 @@
 # three-readme
 
-Three.js シーンを README 埋め込み用のアニメ SVG（SMIL）に焼く CLI / GitHub Action です。platane/snk と同型の、生成した成果物をリポジトリへコミットする方式を採用しています。
+A CLI / GitHub Action that bakes Three.js scenes into animated SVGs (SMIL) for embedding in your README. Like platane/snk, it commits the generated artifacts back into the repository.
 
-## デモ
+## Demo
 
 <p>
   <img width="32%" alt="torusknot" src="./assets/torusknot.svg?v=1">
@@ -10,63 +10,63 @@ Three.js シーンを README 埋め込み用のアニメ SVG（SMIL）に焼く 
   <img width="32%" alt="torus" src="./assets/torus.svg?v=1">
 </p>
 
-`assets/*.svg` は GitHub Action の初回実行まで存在しません。`?v=N` は camo キャッシュバスト用で、SVG 更新を反映したいときに N を増やします（[README への貼り方](#readme-への貼り方)参照）。
+The `assets/*.svg` files don't exist until the GitHub Action runs for the first time. The `?v=N` query is for camo cache-busting — bump `N` when you want SVG updates to show up (see [Embedding in a README](#embedding-in-a-readme)).
 
-## 仕組み
+## How it works
 
-jsdom で Node.js 環境へ DOM を注入します。
-three の `SVGRenderer` で各フレームを SVG に変換します。
-one-hot opacity の SMIL `<animate>` で N フレームを単一 SVG にエンコードします。
-最後に SVGO で保守的に最適化します。
+jsdom injects a DOM into the Node.js environment.
+Three's `SVGRenderer` converts each frame into SVG.
+N frames are encoded into a single SVG using one-hot opacity SMIL `<animate>` elements.
+Finally, SVGO optimizes the result conservatively.
 
-## CLI の使い方
+## CLI usage
 
 ```bash
 npm run render -- --scene torusknot --frames 24 --bg "#0d1117" --color "#39d353" --out assets/torusknot.svg
 ```
 
-| フラグ | 既定値 | 説明 |
+| Flag | Default | Description |
 | --- | --- | --- |
-| `--scene` | `torusknot` | 描画するシーン名（`torusknot` / `icosahedron` / `torus`） |
-| `--frames` | `24` | フレーム数（正の整数） |
-| `--fps` | `12` | 1秒あたりのフレーム数 |
-| `--width` | `480` | SVG の幅 |
-| `--height` | `480` | SVG の高さ |
-| `--color` | `#ffffff` | シーンへ渡す描画色 |
-| `--bg` | `none` | 背景色。`none` で透過 |
-| `--out` | `out/<scene>.svg` | 出力先 |
+| `--scene` | `torusknot` | Scene name to render (`torusknot` / `icosahedron` / `torus`) |
+| `--frames` | `24` | Number of frames (positive integer) |
+| `--fps` | `12` | Frames per second |
+| `--width` | `480` | SVG width |
+| `--height` | `480` | SVG height |
+| `--color` | `#ffffff` | Drawing color passed to the scene |
+| `--bg` | `none` | Background color. `none` for transparent |
+| `--out` | `out/<scene>.svg` | Output path |
 
-未知の `--key value` フラグは `params` としてシーンへ渡されます。`--color` も `params` 経由でシーンが使用します。
+Unknown `--key value` flags are passed to the scene as `params`. `--color` is also consumed by the scene via `params`.
 
-## シーンの追加方法
+## Adding a scene
 
-1. `src/scenes/<name>.ts` を作り、`SceneFactory`（`(params, ctx) => { scene, camera, update(frame, frameCount) }`）を default export ではなく名前付き export で実装します。`ctx` は `{ THREE, width, height }` です。色には `params.color` を使います。
-2. `src/scenes/index.ts` でシーンを import し、`sceneRegistry` に登録します。
-3. `npm run render -- --scene <name> --out assets/<name>.svg` で生成して確認します。
+1. Create `src/scenes/<name>.ts` and implement a `SceneFactory` (`(params, ctx) => { scene, camera, update(frame, frameCount) }`) as a named export (not a default export). `ctx` is `{ THREE, width, height }`. Use `params.color` for the color.
+2. Import the scene in `src/scenes/index.ts` and register it in `sceneRegistry`.
+3. Generate and verify with `npm run render -- --scene <name> --out assets/<name>.svg`.
 
-`src/scenes/torusknot.ts` / `src/scenes/icosahedron.ts` / `src/scenes/torus.ts` が実装例です。
+`src/scenes/torusknot.ts` / `src/scenes/icosahedron.ts` / `src/scenes/torus.ts` are reference implementations.
 
 ## GitHub Action
 
-`.github/workflows/render.yml` は、手動実行、毎週月曜の定期実行、または `main` への `src` などの変更を契機に SVG を再生成し、`assets/` へ自動コミットします。
+`.github/workflows/render.yml` regenerates the SVGs and auto-commits them to `assets/` — triggered manually, on a weekly schedule (every Monday), or on pushes to `main` that touch `src` and similar paths.
 
-自分のリポジトリで使う手順:
+To use it in your own repository:
 
-1. `.github/workflows/render.yml` をコピーします。
-2. CLI の `--scene`、色、フレーム数、出力先などを編集します。
-3. ワークフローに `permissions: contents: write` を設定し、Actions にコミット権限を与えます。
+1. Copy `.github/workflows/render.yml`.
+2. Edit the CLI `--scene`, color, frame count, output path, etc.
+3. Set `permissions: contents: write` in the workflow to grant Actions commit access.
 
-## README への貼り方
+## Embedding in a README
 
-相対パスにキャッシュバスト用のクエリを付けます。
+Use a relative path with a cache-busting query.
 
 ```markdown
 ![](./assets/torusknot.svg?v=1)
 ```
 
-GitHub は SVG を camo プロキシ経由で配信し、強くキャッシュします。SVG の更新を README に反映したいときは、`?v=N` の N を増やしてください。
+GitHub serves SVGs through its camo proxy with aggressive caching. When you want an SVG update to show up in your README, bump `N` in `?v=N`.
 
-## 制約
+## Constraints
 
-- アニメーションは SMIL のみです。CSS の `<style>` や `@keyframes` は使いません。
-- 約 12 fps、数百 KB 以内を目安にしてください。
+- Animation is SMIL only. No CSS `<style>` or `@keyframes`.
+- Aim for around 12 fps and within a few hundred KB.
