@@ -6,6 +6,7 @@ Three.js シーンを README 埋め込み用のアニメ SVG（SMIL）に焼く 
 
 ![torusknot](./assets/torusknot.svg)
 ![icosahedron](./assets/icosahedron.svg)
+![torus](./assets/torus.svg)
 
 `assets/*.svg` は GitHub Action の初回実行まで存在しません。
 
@@ -24,7 +25,7 @@ npm run render -- --scene torusknot --frames 24 --bg "#0d1117" --color "#39d353"
 
 | フラグ | 既定値 | 説明 |
 | --- | --- | --- |
-| `--scene` | `torusknot` | 描画するシーン名（`torusknot` または `icosahedron`） |
+| `--scene` | `torusknot` | 描画するシーン名（`torusknot` / `icosahedron` / `torus`） |
 | `--frames` | `24` | フレーム数（正の整数） |
 | `--fps` | `12` | 1秒あたりのフレーム数 |
 | `--width` | `480` | SVG の幅 |
@@ -41,7 +42,7 @@ npm run render -- --scene torusknot --frames 24 --bg "#0d1117" --color "#39d353"
 2. `src/scenes/index.ts` でシーンを import し、`sceneRegistry` に登録します。
 3. `npm run render -- --scene <name> --out assets/<name>.svg` で生成して確認します。
 
-`src/scenes/torusknot.ts` と `src/scenes/icosahedron.ts` が実装例です。
+`src/scenes/torusknot.ts` / `src/scenes/icosahedron.ts` / `src/scenes/torus.ts` が実装例です。
 
 ## GitHub Action
 

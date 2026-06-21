@@ -32,6 +32,8 @@ jobs:
 
       - run: npm run render -- --scene icosahedron --frames 24 --fps 12 --bg "#0d1117" --color "#58a6ff" --out assets/icosahedron.svg
 
+      - run: npm run render -- --scene torus --frames 24 --fps 12 --bg "#0d1117" --color "#f778ba" --out assets/torus.svg
+
       # 成果物は決定的（同じ入力なら同じ出力）なため、差分がなければコミットも再トリガーもされません。
       - uses: stefanzweifel/git-auto-commit-action@v5
         with:
