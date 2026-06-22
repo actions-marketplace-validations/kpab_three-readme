@@ -5,16 +5,18 @@ A CLI / GitHub Action that bakes Three.js scenes into animated SVGs (SMIL) for e
 ## Demo
 
 <p align="center">
-  <img width="50%" alt="crystal" src="./assets/crystal.svg?v=a5a0db6a">
+  <img width="50%" alt="crystal" src="./assets/crystal.svg?v=9d50f6b2">
 </p>
 
 <p align="center">
-  <img width="19%" alt="text" src="./assets/text.svg?v=ed8cef1b">
-  <img width="19%" alt="torusknot" src="./assets/torusknot.svg?v=56e0acf3">
-  <img width="19%" alt="icosahedron" src="./assets/icosahedron.svg?v=c242b575">
-  <img width="19%" alt="torus" src="./assets/torus.svg?v=cba3d85c">
-  <img width="19%" alt="teapot" src="./assets/teapot.svg?v=d1a880ed">
+  <img width="19%" alt="text" src="./assets/text.svg?v=dbfa3662">
+  <img width="19%" alt="torusknot" src="./assets/torusknot.svg?v=a1d2572e">
+  <img width="19%" alt="icosahedron" src="./assets/icosahedron.svg?v=b2a25109">
+  <img width="19%" alt="torus" src="./assets/torus.svg?v=29ff204a">
+  <img width="19%" alt="teapot" src="./assets/teapot.svg?v=c4eec480">
 </p>
+
+These demos are rendered with a transparent background (`--bg none`), so they sit cleanly on both light and dark GitHub themes — no `<picture>` swap needed.
 
 The `assets/*.svg` files don't exist until the GitHub Action runs for the first time. The `?v=<hash>` query is for camo cache-busting and is maintained automatically — the workflow rewrites it to the SVG's content hash, so it changes only when the image changes (see [Embedding in a README](#embedding-in-a-readme)).
 
