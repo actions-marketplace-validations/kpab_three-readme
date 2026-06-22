@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>three-readme — animated Three.js SVGs for your README</title>
+<meta name="description" content="A CLI / GitHub Action that bakes Three.js scenes into animated SVGs (SMIL) you can embed in your README.">
+<meta property="og:title" content="three-readme">
+<meta property="og:description" content="Bake Three.js scenes into animated SVGs for your README, via a CLI and GitHub Action.">
+<meta property="og:image" content="https://raw.githubusercontent.com/kpab/three-readme/main/assets/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<style>
+  :root {
+    --bg: #0d1117;
+    --panel: #161b22;
+    --border: #21262d;
+    --fg: #e6edf3;
+    --muted: #8b949e;
+    --purple: #a371f7;
+    --green: #39d353;
+    --mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--fg);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    background-image:
+      radial-gradient(circle at 50% -20%, rgba(163,113,247,0.15), transparent 55%);
+  }
+  a { color: var(--purple); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  .wrap { max-width: 960px; margin: 0 auto; padding: 0 24px; }
+
+  header { text-align: center; padding: 72px 0 40px; }
+  .hero-art { width: 240px; height: 240px; filter: drop-shadow(0 8px 40px rgba(163,113,247,0.35)); }
+  h1 {
+    font-size: clamp(2.4rem, 7vw, 3.6rem);
+    letter-spacing: -0.03em;
+    margin: 8px 0 12px;
+    font-family: var(--mono);
+  }
+  .tagline { font-size: clamp(1.05rem, 2.6vw, 1.35rem); color: var(--muted); max-width: 620px; margin: 0 auto 28px; }
+  .cta { display: inline-flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 11px 20px; border-radius: 8px; font-weight: 600; font-size: 0.95rem;
+    border: 1px solid var(--border); transition: transform .12s ease, border-color .12s ease;
+  }
+  .btn:hover { text-decoration: none; transform: translateY(-2px); }
+  .btn-primary { background: var(--purple); color: #fff; border-color: var(--purple); }
+  .btn-ghost { background: var(--panel); color: var(--fg); }
+
+  section { padding: 40px 0; }
+  h2 { font-size: 1.5rem; letter-spacing: -0.02em; margin-bottom: 8px; font-family: var(--mono); }
+  .section-sub { color: var(--muted); margin-bottom: 28px; }
+
+  .gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 16px; }
+  .tile {
+    background: var(--panel); border: 1px solid var(--border); border-radius: 12px;
+    padding: 16px; text-align: center; transition: border-color .15s ease, transform .15s ease;
+  }
+  .tile:hover { border-color: var(--purple); transform: translateY(-3px); }
+  .tile img { width: 100%; height: 150px; object-fit: contain; }
+  .tile .name { font-family: var(--mono); font-size: 0.85rem; color: var(--muted); margin-top: 10px; }
+
+  .steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; }
+  .step { background: var(--panel); border: 1px solid var(--border); border-radius: 12px; padding: 20px; }
+  .step .n { font-family: var(--mono); color: var(--purple); font-weight: 700; }
+  .step h3 { font-size: 1.05rem; margin: 6px 0; }
+  .step p { color: var(--muted); font-size: 0.92rem; }
+
+  pre {
+    background: var(--panel); border: 1px solid var(--border); border-radius: 12px;
+    padding: 20px; overflow-x: auto; font-family: var(--mono); font-size: 0.85rem; line-height: 1.7;
+  }
+  pre .k { color: var(--purple); }
+  pre .s { color: var(--green); }
+  pre .c { color: var(--muted); }
+
+  footer { text-align: center; padding: 56px 0 72px; color: var(--muted); font-size: 0.9rem; border-top: 1px solid var(--border); margin-top: 32px; }
+  footer a { color: var(--muted); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <img class="hero-art" alt="rotating low-poly crystal" src="https://raw.githubusercontent.com/kpab/three-readme/main/assets/crystal.svg">
+    <h1>three-readme</h1>
+    <p class="tagline">Bake Three.js scenes into animated SVGs (SMIL) and embed them in your README — driven by a CLI and a reusable GitHub Action.</p>
+    <div class="cta">
+      <a class="btn btn-primary" href="https://github.com/kpab/three-readme">★ Star on GitHub</a>
+      <a class="btn btn-ghost" href="#quickstart">Get started</a>
+    </div>
+  </header>
+
+  <section>
+    <h2>Scene gallery</h2>
+    <p class="section-sub">Every scene below is a single self-contained SVG, animated with SMIL — no JS, no GIF. Transparent backgrounds adapt to light and dark themes.</p>
+    <div class="gallery">
+      <div class="tile"><img alt="crystal" src="https://raw.githubusercontent.com/kpab/three-readme/main/assets/crystal.svg"><div class="name">crystal</div></div>
+      <div class="tile"><img alt="text" src="https://raw.githubusercontent.com/kpab/three-readme/main/assets/text.svg"><div class="name">text · --text</div></div>
+      <div class="tile"><img alt="teapot" src="https://raw.githubusercontent.com/kpab/three-readme/main/assets/teapot.svg"><div class="name">teapot</div></div>
+      <div class="tile"><img alt="torusknot" src="https://raw.githubusercontent.com/kpab/three-readme/main/assets/torusknot.svg"><div class="name">torusknot</div></div>
+      <div class="tile"><img alt="icosahedron" src="https://raw.githubusercontent.com/kpab/three-readme/main/assets/icosahedron.svg"><div class="name">icosahedron</div></div>
+      <div class="tile"><img alt="torus" src="https://raw.githubusercontent.com/kpab/three-readme/main/assets/torus.svg"><div class="name">torus</div></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>How it works</h2>
+    <p class="section-sub">jsdom + Three's SVGRenderer, baked into one optimized file.</p>
+    <div class="steps">
+      <div class="step"><div class="n">01</div><h3>Render frames</h3><p>jsdom injects a DOM; Three's <code>SVGRenderer</code> turns each frame into vector SVG.</p></div>
+      <div class="step"><div class="n">02</div><h3>Flipbook</h3><p>N frames are encoded into one SVG via one-hot opacity <code>&lt;animate&gt;</code> (SMIL) elements.</p></div>
+      <div class="step"><div class="n">03</div><h3>Commit</h3><p>SVGO optimizes the result, and the Action commits it back into <code>assets/</code> — like platane/snk.</p></div>
+    </div>
+  </section>
+
+  <section id="quickstart">
+    <h2>Quickstart</h2>
+    <p class="section-sub">Add a few lines to a workflow in your own repo. No need to vendor Three.js.</p>
+<pre><span class="c"># .github/workflows/readme-art.yml</span>
+<span class="k">- uses:</span> kpab/three-readme@v1
+  <span class="k">with:</span>
+    <span class="k">scene:</span> <span class="s">crystal</span>
+    <span class="k">color:</span> <span class="s">"#a371f7"</span>
+    <span class="k">out:</span> <span class="s">assets/crystal.svg</span>
+
+<span class="k">- uses:</span> stefanzweifel/git-auto-commit-action@v5
+  <span class="k">with:</span>
+    <span class="k">file_pattern:</span> <span class="s">"assets/*.svg"</span></pre>
+    <p class="section-sub" style="margin-top:18px">Then embed it: <code>![](./assets/crystal.svg)</code>. Want your name spinning in 3D? Use the <code>text</code> scene with <code>--text "YOUR NAME"</code>.</p>
+    <div class="cta" style="justify-content:flex-start">
+      <a class="btn btn-primary" href="https://github.com/kpab/three-readme#readme">Read the docs</a>
+    </div>
+  </section>
+</div>
+
+<footer>
+  <div class="wrap">
+    <a href="https://github.com/kpab/three-readme">github.com/kpab/three-readme</a> · MIT License · made with three-readme
+  </div>
+</footer>
+</body>
+</html>
